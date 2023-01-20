@@ -3,16 +3,20 @@ import { ContactForm } from './ContactForm';
 import { ContactList } from './ContactList';
 import { Filter } from './Filter';
 import { useSelector, useDispatch } from 'react-redux';
-import { setFilter } from '../redux/filterSlice';
+import { getContacts } from '../redux/contactSlice';
+import { setFilter, getFilter } from '../redux/filterSlice';
 
 export const App = () => {
-  const contacts = useSelector(state => state.contacts);
-  const filter = useSelector(state => state.filter);
+  const contacts = useSelector(getContacts);
+  const filter = useSelector(getFilter);
   const dispatch = useDispatch();
+  console.log(contacts);
 
   const filteredNames = contacts.filter(contact =>
     contact.name.toLowerCase().includes(filter.toLowerCase())
   );
+
+  console.log(contacts);
 
   const handleFilter = event => {
     const { value } = event.target;
@@ -29,13 +33,3 @@ export const App = () => {
     </Container>
   );
 };
-
-// const [contacts, setContacts] = useState(
-//   () => JSON.parse(localStorage.getItem(TEL)) ?? data
-// );
-
-// useEffect(() => {
-//   if (contacts !== data) {
-//     localStorage.setItem(TEL, JSON.stringify(contacts));
-//   }
-// }, [contacts]);
