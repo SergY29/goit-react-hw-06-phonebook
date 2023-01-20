@@ -3,7 +3,7 @@ import { ContactForm } from './ContactForm';
 import { ContactList } from './ContactList';
 import { Filter } from './Filter';
 import { useSelector, useDispatch } from 'react-redux';
-import { setFilter } from '..//redux/store';
+import { setFilter } from '../redux/filterSlice';
 
 export const App = () => {
   const contacts = useSelector(state => state.contacts);

@@ -2,7 +2,7 @@ import { useState, useMemo } from 'react';
 import { Form, Label, Input } from './ContactForm.styled';
 import PropTypes from 'prop-types';
 import { useDispatch } from 'react-redux';
-import { addContact } from '../../redux/store';
+import { addContact } from '../../redux/contactSlice';
 
 export const ContactForm = ({ contacts }) => {
   const [name, setName] = useState('');
