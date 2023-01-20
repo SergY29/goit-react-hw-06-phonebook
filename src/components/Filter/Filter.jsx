@@ -1,7 +1,11 @@
-import PropTypes from 'prop-types';
+// import PropTypes from 'prop-types';
 import { Label, Input } from './Filter.styled';
 
-export const Filter = ({ filter, onFilter }) => {
+// {
+//   filter, onFilter;
+// }
+
+export const Filter = () => {
   return (
     <Label>
       Find contacts by name
@@ -11,14 +15,14 @@ export const Filter = ({ filter, onFilter }) => {
         pattern="^[a-zA-Zа-яА-Я]+(([' -][a-zA-Zа-яА-Я ])?[a-zA-Zа-яА-Я]*)*$"
         title="Name may contain only letters, apostrophe, dash and spaces. For example Adrian, Jacob Mercer, Charles de Batz de Castelmore d'Artagnan"
         required
-        onChange={onFilter}
-        value={filter}
+        // onChange={onFilter}
+        // value={filter}
       />
     </Label>
   );
 };
 
-Filter.propTypes = {
-  filter: PropTypes.string.isRequired,
-  onFilter: PropTypes.func.isRequired,
-};
+// Filter.propTypes = {
+//   filter: PropTypes.string.isRequired,
+//   onFilter: PropTypes.func.isRequired,
+// };

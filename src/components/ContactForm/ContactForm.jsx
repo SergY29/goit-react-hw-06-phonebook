@@ -1,10 +1,21 @@
-import PropTypes from 'prop-types';
-import { useState } from 'react';
+import { useState, useMemo } from 'react';
 import { Form, Label, Input } from './ContactForm.styled';
+import PropTypes from 'prop-types';
+import { useDispatch } from 'react-redux';
+import { addContact } from '../../redux/store';
 
-export const ContactForm = ({ onSubmitCont }) => {
+export const ContactForm = ({ contacts }) => {
   const [name, setName] = useState('');
   const [number, setNumber] = useState('');
+  const dispatch = useDispatch();
+
+  const notUniqueName = useMemo(
+    () =>
+      contacts.find(
+        contact => contact.name.toLowerCase() === name.toLowerCase()
+      ),
+    [contacts, name]
+  );
 
   const handleChange = event => {
     const { name, value } = event.target;
@@ -25,7 +36,11 @@ export const ContactForm = ({ onSubmitCont }) => {
 
   const handleSubmit = event => {
     event.preventDefault();
-    onSubmitCont(name, number);
+
+    if (notUniqueName) {
+      return alert(`${name} is alredy in contacts!`);
+    }
+    dispatch(addContact(name, number));
     setName('');
     setNumber('');
   };
@@ -63,5 +78,11 @@ export const ContactForm = ({ onSubmitCont }) => {
 };
 
 ContactForm.propTypes = {
-  onSubmitCont: PropTypes.func.isRequired,
+  contacts: PropTypes.arrayOf(
+    PropTypes.exact({
+      number: PropTypes.string.isRequired,
+      name: PropTypes.string.isRequired,
+      id: PropTypes.string.isRequired,
+    })
+  ),
 };

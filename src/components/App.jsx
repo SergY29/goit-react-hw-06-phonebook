@@ -1,61 +1,44 @@
-import { nanoid } from 'nanoid';
-import { useState, useEffect } from 'react';
+// import { nanoid } from 'nanoid';
+// import { useState, useEffect } from 'react';
 import { Container } from './App.styled';
 import { ContactForm } from './ContactForm';
 import { ContactList } from './ContactList';
 import { Filter } from './Filter';
-import data from './Data/data.json';
-
-const TEL = 'contacts';
+import { useSelector } from 'react-redux';
 
 export const App = () => {
-  const [contacts, setContacts] = useState(
-    () => JSON.parse(localStorage.getItem(TEL)) ?? data
-  );
-  const [filter, setFilter] = useState('');
+  const value = useSelector(state => state.contacts);
 
-  const filteredNames = contacts.filter(contact =>
-    contact.name.toLowerCase().includes(filter.toLowerCase())
-  );
+  // console.log(value);
+  // const [contacts, setContacts] = useState(
+  //   () => JSON.parse(localStorage.getItem(TEL)) ?? data
+  // );
+  // const [filter, setFilter] = useState('');
 
-  useEffect(() => {
-    if (contacts !== data) {
-      localStorage.setItem(TEL, JSON.stringify(contacts));
-    }
-  }, [contacts]);
+  // const filteredNames = contacts.filter(contact =>
+  //   contact.name.toLowerCase().includes(filter.toLowerCase())
+  // );
 
-  const addContact = (name, number) => {
-    const newContact = {
-      id: nanoid(),
-      name,
-      number,
-    };
-    const notUniqueName = contacts.find(
-      contact => contact.name.toLowerCase() === name.toLowerCase()
-    );
+  // useEffect(() => {
+  //   if (contacts !== data) {
+  //     localStorage.setItem(TEL, JSON.stringify(contacts));
+  //   }
+  // }, [contacts]);
 
-    if (notUniqueName) {
-      return alert(`${name} is alredy in contacts!`);
-    }
-    setContacts([newContact, ...contacts]);
-  };
-
-  const handleFilter = event => {
-    const { value } = event.target;
-    setFilter(value);
-  };
-
-  const handleDelete = id => {
-    setContacts(contacts.filter(contact => contact.id !== id));
-  };
+  // const handleFilter = event => {
+  //   const { value } = event.target;
+  //   setFilter(value);
+  // };
 
   return (
     <Container>
       <h1>Phonebook</h1>
-      <ContactForm onSubmitCont={addContact} />
+      <ContactForm contacts={value} />
       <h2>Contacts</h2>
-      <Filter filter={filter} onFilter={handleFilter} />
-      <ContactList contacts={filteredNames} onDelete={handleDelete} />
+      {/* <Filter filter={filter} onFilter={handleFilter} /> */}
+      <Filter />
+      {/* <ContactList contacts={filteredNames} onDelete={handleDelete} /> */}
+      <ContactList contacts={value} />
     </Container>
   );
 };
