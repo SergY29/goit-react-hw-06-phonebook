@@ -26,29 +26,24 @@ const contactSlice = createSlice({
     }
 });
 
-
-// const handleDelete = id => {
-//   setContacts(contacts.filter(contact => contact.id !== id));
-// };
-
 export const { addContact, deleteContact } = contactSlice.actions;
 
 
-// const filterSlice = createSlice({
-//     name: "filter",
-//     initialState: '',
-//     reducers: {
-//         setFilter: (state, action) {
+const filterSlice = createSlice({
+    name: "filter",
+    initialState: '',
+    reducers: {
+        setFilter(state, action) {
+            return state = action.payload
+        }
+    }
+});
 
-//         }
-//     }
-// });
-
-// export const { setFilter } = contactSlice.actions;
+export const { setFilter } = filterSlice.actions;
 
 export const store = configureStore({
     reducer: {
         contacts: contactSlice.reducer,
-        // filter: filterSlice.reducer,
+        filter: filterSlice.reducer,
     }
 });

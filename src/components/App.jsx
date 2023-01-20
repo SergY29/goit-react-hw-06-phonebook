@@ -1,44 +1,41 @@
-// import { nanoid } from 'nanoid';
-// import { useState, useEffect } from 'react';
 import { Container } from './App.styled';
 import { ContactForm } from './ContactForm';
 import { ContactList } from './ContactList';
 import { Filter } from './Filter';
-import { useSelector } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
+import { setFilter } from '..//redux/store';
 
 export const App = () => {
-  const value = useSelector(state => state.contacts);
+  const contacts = useSelector(state => state.contacts);
+  const filter = useSelector(state => state.filter);
+  const dispatch = useDispatch();
 
-  // console.log(value);
-  // const [contacts, setContacts] = useState(
-  //   () => JSON.parse(localStorage.getItem(TEL)) ?? data
-  // );
-  // const [filter, setFilter] = useState('');
+  const filteredNames = contacts.filter(contact =>
+    contact.name.toLowerCase().includes(filter.toLowerCase())
+  );
 
-  // const filteredNames = contacts.filter(contact =>
-  //   contact.name.toLowerCase().includes(filter.toLowerCase())
-  // );
-
-  // useEffect(() => {
-  //   if (contacts !== data) {
-  //     localStorage.setItem(TEL, JSON.stringify(contacts));
-  //   }
-  // }, [contacts]);
-
-  // const handleFilter = event => {
-  //   const { value } = event.target;
-  //   setFilter(value);
-  // };
+  const handleFilter = event => {
+    const { value } = event.target;
+    dispatch(setFilter(value));
+  };
 
   return (
     <Container>
       <h1>Phonebook</h1>
-      <ContactForm contacts={value} />
+      <ContactForm contacts={contacts} />
       <h2>Contacts</h2>
-      {/* <Filter filter={filter} onFilter={handleFilter} /> */}
-      <Filter />
-      {/* <ContactList contacts={filteredNames} onDelete={handleDelete} /> */}
-      <ContactList contacts={value} />
+      <Filter filter={filter} onFilter={handleFilter} />
+      <ContactList contacts={filteredNames} />
     </Container>
   );
 };
+
+// const [contacts, setContacts] = useState(
+//   () => JSON.parse(localStorage.getItem(TEL)) ?? data
+// );
+
+// useEffect(() => {
+//   if (contacts !== data) {
+//     localStorage.setItem(TEL, JSON.stringify(contacts));
+//   }
+// }, [contacts]);
